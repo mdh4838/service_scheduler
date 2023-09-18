@@ -1,3 +1,4 @@
+```
 #Local setup
 
 cd service_scheduler
@@ -6,6 +7,8 @@ composer install
 cp .env.example .env
 php artisan key:generate
 php artisan test
+
+```
 
 
 
