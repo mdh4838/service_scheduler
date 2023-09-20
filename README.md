@@ -11,7 +11,7 @@ php artisan key:generate
 ```
 #Run unit tests
 
-php artisan test
+php artisan test --testsuite=Unit
 ```
 
 
