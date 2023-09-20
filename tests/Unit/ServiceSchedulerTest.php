@@ -37,7 +37,7 @@ class ServiceSchedulerTest extends TestCase
 
         $this->assertInstanceOf(\InvalidArgumentException::class, $result);
 
-        $this->assertEquals(ServiceScheduler::BAD_CUSTOMER_ERROR_MESSAGE, $result->getMessage());
+        $this->assertEquals(ServiceScheduler::INVALID_CUSTOMER_ERROR_MESSAGE, $result->getMessage());
 
         // assert queues are empty
         $this->assertCount(0, $this->scheduler->getVipQueue());
@@ -94,16 +94,16 @@ class ServiceSchedulerTest extends TestCase
     public static function dataForCheckInAddsToCorrectQueue()
     {
         return [
-            [new Customer('John Doe', '123-456-7890', 'VIP'), new Customer('Jane Smith', '987-654-3210', 'Regular'), 1, 1],
+            [new Customer('John Doe', '123-456-7890', Customer::TYPE_VIP), new Customer('Jane Smith', '987-654-3210', Customer::TYPE_REGULAR), 1, 1],
         ];
     }
 
     public static function dataForGetNextCustomerReturnsCustomersInOrder()
     {
-        $c1 = new Customer('John Doe', '111-111-1111', 'VIP');
-        $c2 = new Customer('Mary Yi', '333-333-3333', 'Regular');
-        $c3 = new Customer('Jane Smith', '222-222-2222', 'VIP');
-        $c4 = new Customer('Tom Barry', '444-444-4444', 'Regular');
+        $c1 = new Customer('John Doe', '111-111-1111', Customer::TYPE_VIP);
+        $c2 = new Customer('Mary Yi', '333-333-3333', Customer::TYPE_REGULAR);
+        $c3 = new Customer('Jane Smith', '222-222-2222', Customer::TYPE_VIP);
+        $c4 = new Customer('Tom Barry', '444-444-4444', Customer::TYPE_REGULAR);
 
         return [
             [
@@ -115,13 +115,13 @@ class ServiceSchedulerTest extends TestCase
 
     public static function dataForGetNextCustomerSatisfying2to1ProcessingRate()
     {
-        $c1 = new Customer('John Doe', '111-111-1111', 'VIP');
-        $c2 = new Customer('Jane Smith', '222-222-2222', 'VIP');
-        $c3 = new Customer('John Garrigan', '989-222-2222', 'VIP');
-        $c4 = new Customer('Mary Kessler', '333-333-3333', 'Regular');
-        $c5 = new Customer('Tom Barry', '444-444-4444', 'Regular');
-        $c6 = new Customer('Adam Sandler', '133-444-4444', 'Regular');
-        $c7 = new Customer('Tom Brady', '888-444-4444', 'Regular');
+        $c1 = new Customer('John Doe', '111-111-1111', Customer::TYPE_VIP);
+        $c2 = new Customer('Jane Smith', '222-222-2222', Customer::TYPE_VIP);
+        $c3 = new Customer('John Garrigan', '989-222-2222', Customer::TYPE_VIP);
+        $c4 = new Customer('Mary Kessler', '333-333-3333', Customer::TYPE_REGULAR);
+        $c5 = new Customer('Tom Barry', '444-444-4444', Customer::TYPE_REGULAR);
+        $c6 = new Customer('Adam Sandler', '133-444-4444', Customer::TYPE_REGULAR);
+        $c7 = new Customer('Tom Brady', '888-444-4444', Customer::TYPE_REGULAR);
 
         return [
             [
