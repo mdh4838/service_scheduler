@@ -3,8 +3,6 @@
 namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-
-
 use App\Customer as Customer;
 use App\ServiceScheduler as ServiceScheduler;
 
@@ -23,6 +21,7 @@ class ServiceSchedulerTest extends TestCase
         unset($this->scheduler);
     }
 
+    // Helper function to check in customers
     private function checkInCustomers(...$customers)
     {
         foreach ($customers as $customer) {
@@ -30,6 +29,7 @@ class ServiceSchedulerTest extends TestCase
         }
     }
 
+    // Test invalid customer check-in
     public function testCheckInWithInvalidCustomer()
     {
         $customer = 'Invalid Customer Data';
@@ -43,7 +43,6 @@ class ServiceSchedulerTest extends TestCase
         $this->assertCount(0, $this->scheduler->getVipQueue());
         $this->assertCount(0, $this->scheduler->getRegularQueue());
     }
-
 
     /**
      * @dataProvider dataForCheckInAddsToCorrectQueue
@@ -77,7 +76,6 @@ class ServiceSchedulerTest extends TestCase
         $this->assertNull($this->scheduler->getNextCustomer());
     }
 
-
     /**
      * @dataProvider dataForGetNextCustomerSatisfying2to1ProcessingRate
      */
@@ -91,6 +89,7 @@ class ServiceSchedulerTest extends TestCase
         }
     }
 
+    // Data provider for the testCheckInAddsToCorrectQueue test
     public static function dataForCheckInAddsToCorrectQueue()
     {
         return [
@@ -98,6 +97,7 @@ class ServiceSchedulerTest extends TestCase
         ];
     }
 
+    // Data provider for the testGetNextCustomerReturnsCustomersInOrder test
     public static function dataForGetNextCustomerReturnsCustomersInOrder()
     {
         $c1 = new Customer('John Doe', '111-111-1111', Customer::TYPE_VIP);
@@ -113,6 +113,7 @@ class ServiceSchedulerTest extends TestCase
         ];
     }
 
+    // Data provider for the testGetNextCustomerSatisfying2to1ProcessingRate test
     public static function dataForGetNextCustomerSatisfying2to1ProcessingRate()
     {
         $c1 = new Customer('John Doe', '111-111-1111', Customer::TYPE_VIP);
@@ -131,5 +132,3 @@ class ServiceSchedulerTest extends TestCase
         ];
     }
 }
-
-
